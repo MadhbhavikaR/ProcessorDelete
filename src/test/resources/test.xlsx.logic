@@ -40,7 +40,7 @@ curl=curl 'https://mvnrepository.com/search?q={groupId}' -H 'Connection: keep-al
 #place_holder=\\\\{(\\w*)\\\\}
 
 # Pattern for classifying the results into groups, if there are multiple classifiers then they need classifier be indexed starting sourceFile 1
-classifier_1=.*Found <b>[1-9][0-9]{0,2}|1000<\\/b> results.*
+classifier_1=.*Found <b>\\d*<\\/b> results.*
 
 # Group name for a classifier if the respective classifier is matched, this should be one classifier one matching with respective classifier
 classifier_group_1=Found

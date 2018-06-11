@@ -41,8 +41,13 @@ public final class LogicFiles {
         File directory = new File(path);
         if (directory.isDirectory()) {
             final Map<ApplicationFile, Set<String>> fileList = FileFilter.filter(ApplicationFile.SOURCE_FILES, directory);
-            this.inputPathList.get(ApplicationFile.LOGIC_FILES).addAll(fileList.get(ApplicationFile.LOGIC_FILES));
-            this.inputPathList.get(ApplicationFile.SOURCE_FILES).addAll(fileList.get(ApplicationFile.SOURCE_FILES));
+            Set<String> logicSet = this.inputPathList.get(ApplicationFile.LOGIC_FILES);
+            logicSet.addAll(fileList.get(ApplicationFile.LOGIC_FILES));
+            this.inputPathList.put(ApplicationFile.LOGIC_FILES, logicSet);
+
+            final Set<String> sourceSet = this.inputPathList.get(ApplicationFile.SOURCE_FILES);
+            sourceSet.addAll(fileList.get(ApplicationFile.SOURCE_FILES));
+            this.inputPathList.put(ApplicationFile.SOURCE_FILES, sourceSet);
             for (String logicFilepath : this.inputPathList.get(ApplicationFile.LOGIC_FILES)) {
                 try (InputStream input = new FileInputStream(logicFilepath)) {
                     Properties properties = new Properties();
