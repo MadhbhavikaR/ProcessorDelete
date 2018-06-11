@@ -60,8 +60,8 @@ final class QueuePoller extends Thread {
     }
 
     void unRegisterConsumer(final String classifierId) {
-            this.consumerMap.remove(classifierId);
-            LOGGER.debug("unregistered Consumer for processors [{}]", classifierId);
+        this.consumerMap.remove(classifierId);
+        LOGGER.debug("unregistered Consumer for processors [{}]", classifierId);
     }
 
     boolean isStartable() {
@@ -72,8 +72,8 @@ final class QueuePoller extends Thread {
         return consumerMap.size();
     }
 
-    List<Consumer> getRegisteredConsumers(){
-         return new ArrayList<>(consumerMap.values());
+    List<Consumer> getRegisteredConsumers() {
+        return new ArrayList<>(consumerMap.values());
     }
 
     @Override
@@ -85,7 +85,7 @@ final class QueuePoller extends Thread {
             try {
                 if (ProcessingQueue.size(queueType) == 0) {
                     synchronized (ProcessingQueue.getReadSemaphore(queueType)) {
-                        ProcessingQueue.getReadSemaphore(queueType).wait(5000);
+                        ProcessingQueue.getReadSemaphore(queueType).wait();
                     }
                 } else {
                     data = ProcessingQueue.poll(queueType);
@@ -95,7 +95,7 @@ final class QueuePoller extends Thread {
                 LOGGER.error("", e);
             }
         }
-        if(QueueType.OUTPUT.equals(queueType) && consumerMap.isEmpty()){
+        if (QueueType.OUTPUT.equals(queueType) && consumerMap.isEmpty()) {
             ProcessingQueue.unRegisterAll();
         }
         LOGGER.info("No consumers registered shutting down poller for [{}]", queueType);

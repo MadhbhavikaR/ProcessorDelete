@@ -162,8 +162,11 @@ public final class ProcessingQueue {
         for (QueueType queueType : QueueType.values()) {
             qMap.get(queueType).getQueuePoller().getRegisteredConsumers().forEach((consumer) -> {
                 try {
-                    unRegisterConsumer(queueType, consumer);
-                } catch (ProcessingException e) {
+                    synchronized (ProcessingQueue.getReadSemaphore(queueType)) {
+                        unRegisterConsumer(queueType, consumer);
+                        ProcessingQueue.getReadSemaphore(queueType).notifyAll();
+                    }
+                } catch (QueueNotFoundException | ProcessingException e) {
                     LOGGER.error("", e);
                 }
             });
