@@ -36,7 +36,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class XLSReader implements Reader<Boolean> {
 
@@ -142,7 +145,9 @@ public class XLSReader implements Reader<Boolean> {
         header = null != header && !header.isEmpty() ? header : String.valueOf(currentCell.getColumnIndex());
         switch (currentCell.getCellTypeEnum()) {
             case NUMERIC:
-                jsonNode.put(header, currentCell.getNumericCellValue());
+                Object o = currentCell.getNumericCellValue();
+                // XSL tends to prefer scientific notation, so we consider this value as text
+                jsonNode.put(header, new BigDecimal(o.toString()).toPlainString());
                 break;
             case _NONE:
             case BLANK:
