@@ -192,7 +192,7 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <property name="src.dir" value=""/>
                                 <property name="package.dir" value="org/toilelibre/libe/curl"/>
 
@@ -220,7 +220,7 @@
                                       message="    public static final String URL = &quot;${project.url}&quot;;${line.separator}"/>
                                 <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
                                       message="}${line.separator}"/>
-                            </tasks>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>
