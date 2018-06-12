@@ -28,14 +28,45 @@
  */
 package online.madhbhavikar.processor;
 
-public final class VersionInfo {
-    private VersionInfo() {}
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public static final String VERSION = "0.0.1-SNAPSHOT";
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public final class VersionInfo {
+    private static final Logger LOGGER = LoggerFactory.getLogger(VersionInfo.class);
+
+    private VersionInfo() {
+    }
+
+    public static final String VERSION = "0.0.1";
     public static final String BUILD_HASH = "developer";
     public static final String VENDOR = "MadhbhavikaR";
     public static final String TITLE = "Processor";
     public static final String ORG_URL = "http://www.madhbhavikar.online";
     public static final String URL = "http://processor.madhbhavikar.online";
+
+    public static void printVersion() {
+        java.net.URL fileUrl = VersionInfo.class.getResource("/logo");
+        final File file = new File(fileUrl.getFile());
+        try (
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader)
+        ) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+            LOGGER.info("{} version {}-{}", VersionInfo.TITLE, VersionInfo.VERSION, VersionInfo.BUILD_HASH);
+            LOGGER.info("Project Page: {}", VersionInfo.URL);
+            LOGGER.info("Powered by: {}", VersionInfo.ORG_URL);
+        } catch (IOException e) {
+            LOGGER.error("", e);
+        }
+    }
+
 }
 

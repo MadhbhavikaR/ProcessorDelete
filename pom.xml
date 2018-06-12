@@ -6,6 +6,7 @@
 
     <properties>
         <jackson.version>2.9.5</jackson.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <scm>
@@ -181,7 +182,7 @@
                 </configuration>
             </plugin>
             <!-- TODO: Look for an alternative for this plugin -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.7</version>
@@ -224,7 +225,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
         <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
     </build>

@@ -24,7 +24,6 @@
 
 package online.madhbhavikar.processor.core;
 
-import online.madhbhavikar.processor.Application;
 import online.madhbhavikar.processor.VersionInfo;
 import online.madhbhavikar.processor.core.domain.LogicFiles;
 import online.madhbhavikar.processor.core.domain.constants.QueueType;
@@ -38,12 +37,7 @@ import online.madhbhavikar.processor.plugins.PluginLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -52,34 +46,19 @@ import java.util.concurrent.Executors;
 
 public class BootStrap {
     private static final Logger LOGGER = LoggerFactory.getLogger(BootStrap.class);
-    private final Application application;
     private final PluginLoader pluginLoader;
     private final Map<QueueType, Map<String, Class<?>>> ioModules;
     private Map<String, Class<? extends AbstractConsumer>> classifiers;
     private static ExecutorService executorService = Executors.newFixedThreadPool(32);
     private final LogicFiles logic = LogicFiles.getInstance();
 
-    public BootStrap(Application application) {
+    public BootStrap() {
         this.pluginLoader = new PluginLoader();
-        this.application = application;
         this.ioModules = new EnumMap<>(QueueType.class);
     }
 
     private void showHeader() {
-        URL fileUrl = getClass().getResource("/logo");
-        final File file = new File(fileUrl.getFile());
-        try (
-                FileReader fileReader = new FileReader(file);
-                BufferedReader bufferedReader = new BufferedReader(fileReader)
-        ) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                LOGGER.info("{}", line);
-            }
-            LOGGER.info("{} v{}-{} {} by {}({}) ", VersionInfo.TITLE, VersionInfo.VERSION, VersionInfo.BUILD_HASH, VersionInfo.URL, VersionInfo.VENDOR, VersionInfo.ORG_URL);
-        } catch (IOException e) {
-            LOGGER.error("", e);
-        }
+        VersionInfo.printVersion();
     }
 
     private void loadDirectories(final String[] directoryPaths) {
@@ -137,7 +116,7 @@ public class BootStrap {
             }
         }
         if (logic.getInputPathList().get(ApplicationFile.SOURCE_FILES).isEmpty()) {
-            LOGGER.error("Terminating Application, Too many skips detected, make sure the Logic files are correctly configured");
+            LOGGER.error("Terminating Application, Too many skips detected for source files, make sure the Logic files are correctly configured");
             System.exit(1);
         }
 
@@ -149,7 +128,8 @@ public class BootStrap {
             String logicFile = LogicFiles.getLogicFilePath(sourceFile);
             if(initializeProcessorPlugins(sourceFile, logicFile) && initializeReaderPlugin(sourceFile, logicFile)) {
                 if(!initializeWriterPlugin(sourceFile, logicFile)){
-
+                    LOGGER.error("Some issue occurred during initialization of the Writer plugins");
+                    System.exit(1);
                 }
             }
         }
@@ -198,8 +178,8 @@ public class BootStrap {
     }
 
     public void run(String[] directories) {
-        LOGGER.info("Boot Strapping Application");
         showHeader();
+        LOGGER.info("Boot Strapping Application");
         LOGGER.info("Scanning Directories for Source and Logic files");
         loadDirectories(directories);
         loadKnownModules();

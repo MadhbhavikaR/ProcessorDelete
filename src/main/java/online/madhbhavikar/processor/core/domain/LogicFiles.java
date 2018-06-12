@@ -110,7 +110,7 @@ public final class LogicFiles {
             }
         }
         if (this.inputPathList.get(ApplicationFile.LOGIC_FILES).isEmpty() || this.inputPathList.get(ApplicationFile.SOURCE_FILES).isEmpty()) {
-            LOGGER.error("Terminating Application, No processable files Found in given path");
+            LOGGER.error("Terminating Application, No processable {} found in the path" , this.inputPathList.get(ApplicationFile.LOGIC_FILES).isEmpty() ? "Logic File" : this.inputPathList.get(ApplicationFile.SOURCE_FILES).isEmpty() ? "Source File" : "Files");
             System.exit(1);
         }
         return addedCount;

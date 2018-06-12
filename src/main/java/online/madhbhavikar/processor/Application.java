@@ -35,7 +35,7 @@ public class Application {
     }
 
     private void run(String[] directories){
-        BootStrap bootStrap = new BootStrap(this);
+        BootStrap bootStrap = new BootStrap();
         bootStrap.run(directories);
     }
 
