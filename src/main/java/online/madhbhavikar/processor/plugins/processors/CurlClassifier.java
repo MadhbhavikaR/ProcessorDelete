@@ -84,14 +84,14 @@ public class CurlClassifier extends AbstractConsumer {
 
     private Data search(Data receivedData) {
         // TODO: add the classifier dynamically so that we can make use of the multi classifier
-        String classifier = logicFile.getStringProperty(receivedData.getMetaData().getLogicFile(),"writer_class", "online.madhbhavikar.processor.plugins.io.output.NoOperation");
+        String classifier = logicFile.getStringProperty(receivedData.getMetaData().getLogicFile(), "writer_class", "online.madhbhavikar.processor.plugins.io.output.NoOperation");
         ObjectNode dataNode = receivedData.getProcessedData();
         String logicFileName = receivedData.getMetaData().getLogicFile();
         String defaultGroup = logicFile.getStringProperty(logicFileName, "classifier_default_group", "Not Found");
         String command = logicFile.getStringProperty(logicFileName, "curl");
         if (null == command || command.isEmpty()) {
             dataNode.put("classifier", defaultGroup);
-            return new Data(dataNode, writeMetaData(receivedData,classifier ));
+            return new Data(dataNode, writeMetaData(receivedData, classifier));
         }
         String placeHolder = logicFile.getStringProperty(logicFileName, "place_holder", "\\{(\\w*)\\}");
         Map<String, String> classifiers = loadClassifiers(logicFileName);
@@ -99,17 +99,21 @@ public class CurlClassifier extends AbstractConsumer {
 
         Pattern pattern = Pattern.compile(placeHolder);
         Matcher matcher = pattern.matcher(command);
-        for (int i = 1; matcher.find(); i++) {
+        for (int i=1; matcher.find(); i++) {
             String group = matcher.group(i);
             if (null != group && !group.isEmpty()) {
                 String query = dataNode.get(group).asText();
                 command = command.replace("{" + group + "}", query);
             } else {
                 dataNode.put("classifier", defaultGroup);
-                return new Data(dataNode, writeMetaData(receivedData,classifier ));
+                return new Data(dataNode, writeMetaData(receivedData, classifier));
             }
+            // Don't know what is the time complexity penalty we have here, need to come up with an optimum algo
+            matcher.reset();
+            matcher = pattern.matcher(command);
         }
         LOGGER.info("Invoking command [{}]", command);
+
         Set<String> matchedClassifiers = new HashSet<>();
         try {
             HttpResponse response = curl(command);
@@ -117,16 +121,17 @@ public class CurlClassifier extends AbstractConsumer {
                 BufferedReader rd = null;
                 rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
-                StringBuffer result = new StringBuffer();
-                String line = "";
+                StringBuilder result = new StringBuilder();
+                String line;
                 while ((line = rd.readLine()) != null) {
                     result.append(line);
                 }
                 result.trimToSize();
+                LOGGER.debug("{}", result);
 
-                for (String possibleClassifier : classifiers.keySet()) {
-                    if (result.toString().matches(possibleClassifier)) {
-                        matchedClassifiers.add(classifiers.get(possibleClassifier));
+                for (Map.Entry<String, String> possibleClassifier : classifiers.entrySet()) {
+                    if (result.toString().matches(possibleClassifier.getKey())) {
+                        matchedClassifiers.add(possibleClassifier.getValue());
                     }
                 }
             }
@@ -140,7 +145,9 @@ public class CurlClassifier extends AbstractConsumer {
             dataNode.put("classifier", String.join(",", matchedClassifiers));
         }
 
-        return new Data(dataNode, writeMetaData(receivedData, classifier ));
+        return new
+
+                Data(dataNode, writeMetaData(receivedData, classifier));
     }
 
     private Map<String, String> loadClassifiers(String logicFileName) {

@@ -1,0 +1,63 @@
+######################################    APPLICATION CONFIGURATION    #################################################
+
+# Class name for the reader Implementation
+reader_class=online.madhbhavikar.processor.plugins.io.input.XLSReader
+
+# Class name of the classifier
+processor_class_list=online.madhbhavikar.processor.plugins.processors.CurlClassifier
+
+# Class name of the writer
+writer_class=online.madhbhavikar.processor.plugins.io.output.CSVWriter
+
+# Worker threads for this classifier
+worker_threads=4
+
+
+
+#######################################  READER SPECIFIC CONFIGURATION #################################################
+#
+# These configuration values are specific classifier the Reader that you have chosen by setting `reader_class`
+#
+########################################################################################################################
+
+# A comma separated list of integer value specifying the sheets of a workbook classifier process
+sheets_to_process=0
+
+
+
+
+
+#######################################   PROCESSOR SPECIFIC CONFIGURATION  ############################################
+#
+# These configuration values are specific classifier the Classifier that you have chosen by setting `classifier_class`
+#
+########################################################################################################################
+
+# The curl command placeholder string which should be used for querying the database
+curl=curl 'https://firsttechfed--ftquality.cs52.my.salesforce.com/_ui/common/search/client/ui/ajax/UnifiedSearchAjaxServlet' -H 'Cookie: oid=00D5B000000CmXv; rememberUn=false; com.salesforce.LocaleInfo=us; oinfo=c3RhdHVzPURFTU8mdHlwZT04Jm9pZD0wMEQ1QjAwMDAwMENtWHY=; web_core_geoCountry=us; web_core_geoRedirected=true; mbox=session#2e5720f47e924b7e804ff87b576e8bcc#1528719071|PC#2e5720f47e924b7e804ff87b576e8bcc.28_59#1591962011; _ga=GA1.2.1420415846.1528717215; invoca_session=%7B%22ttl%22%3A%22Wed%20Jul%2011%202018%2004%3A40%3A47%20GMT-0700%20(Pacific%20Daylight%20Time)%22%2C%22session%22%3A%7B%22activityData%22%3A%22SFDC%20Network%22%2C%22referrer%22%3A%22firsttechfed--ftquality.cs52.my.salesforce.com%22%2C%22mcid%22%3A%2282689013389267475444178527952804950058%22%7D%2C%22config%22%3A%7B%22campaignIdOverrideParam%22%3Anull%2C%22campaignIdOverrideValue%22%3Anull%2C%22requirementsNeeded%22%3Atrue%2C%22cookieName%22%3A%22invoca_session%22%7D%7D; BrowserId=3NaOI-4SSLySTwh0q1iFdw; AMCVS_8D6C67C25245AF020A490D4C%40AdobeOrg=1; AMCV_8D6C67C25245AF020A490D4C%40AdobeOrg=-1891778711%7CMCIDTS%7C17694%7CMCMID%7C82689013389267475444178527952804950058%7CMCAAMLH-1529141150%7C9%7CMCAAMB-1529396950%7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y%7CMCOPTOUT-1528799350s%7CNONE%7CMCSYNCSOP%7C411-17699%7CMCAID%7CNONE%7CvVersion%7C2.4.0; webact=%7B%22l_vdays%22%3A1%2C%22l_visit%22%3A1528717208337%2C%22session%22%3A1528792168358%2C%22l_search%22%3A%22%22%2C%22l_dtype%22%3A%22SFDC%20Network%22%2C%22l_page%22%3A%22SFDC%3Aus%3Alogin%22%2C%22counter%22%3A11%2C%22pv%22%3A2%2C%22f_visit%22%3A1526472524528%2C%22seg%22%3A%22customer%3Aus%22%2C%22d%22%3A%2270130000000sUW0%22%2C%22customer%22%3A1526474423861%7D; inst=APP_5B; sfdc_lv2=KxG83HMKW8f5ji9Cqwxyfu0GIEmOg+PagEL0TIIHGCdbWudz0le9llgxpSATrm68E=; disco=5B:00D5B000000CmXv:0055B000000NPHZ:1; autocomplete=1; sid=00D5B000000CmXv!AQoAQAs4WiyTRM3qxlyk7grTV4yGONYZHFXB0_wFFcxgtLxe9I7pjdV07R7g6e.wXssl5FeVcWyuWoToJjjFsMZtUijcewuF; sid_Client=B000000NPHZB000000CmXv; clientSrc=65.174.253.2; sdtsvalid=1; sfdc-stream=1406793482.38175.0000; 0055B000000NPHZQA4_KnowledgePageFilterArticleValidationStatus=184@0; 0055B000000NPHZQA4_KnowledgePageFilterSavings=184@0; 0055B000000NPHZQA4_KnowledgePageFilterOverdraft_Protection=184@0; 0055B000000NPHZQA4_KnowledgePageFilterMobility=184@0; 0055B000000NPHZQA4_KnowledgePageSortFieldArticle=184@LastPublishedDate' -H 'Origin: https://firsttechfed--ftquality.cs52.my.salesforce.com'  -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8' -H 'User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36' -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' -H 'Accept: */*' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' --data 'searchCount=2&cmdType=cmp&cmp=summarySearchResult&cmp=sidetabAJAX&str={SSN}&initialViewMode=summary&sen=001&sen=003&sen=500&sen=005&sen=006&isdtp=vw&_CONFIRMATIONTOKEN=VmpFPSxNakF4T0Mwd05pMHhOVlF4TURveE9Ub3lPUzR4TkRkYSxVWHlTNUw2anRNOG5WbGl2LTF5dmtOLFlqSmxNek16'
+
+# Place holder for the query parameters, which would be ato filled by the classifier
+place_holder=\\{(\\w*)\\}
+
+# Pattern for classifying the results into groups, if there are multiple classifiers then they need classifier be indexed starting sourceFile 1
+classifier_1=.*No matches found.*
+
+# Group name for a classifier if the respective classifier is matched, this should be one classifier one matching with respective classifier
+classifier_group_1=NOT_FOUND
+
+# Group name for a result that do not match any classifier
+classifier_default_group=FOUND
+
+
+
+#######################################  WRITER SPECIFIC CONFIGURATION #################################################
+#
+# These configuration values are specific classifier the write that you have chosen by setting `writer_class`
+#
+########################################################################################################################
+
+# Output path for storing the results, a dot `.` indicates same as source directory.
+output_directory=.
+
+# Separator character to be used for writing the CSV files
+separator=,
