@@ -35,8 +35,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.template.file>src/templates/VersionInfo.java.template</version.template.file>
-        <version.file>src/main/java/online/madhbhavikar/processor/VersionInfo.java</version.file>
         <jackson.version>2.9.5</jackson.version>
     </properties>
 
@@ -193,48 +191,19 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.google.code.maven-replacer-plugin</groupId>
-                <artifactId>replacer</artifactId>
-                <version>1.5.3</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>templating-maven-plugin</artifactId>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
-                        <phase>generate-sources</phase>
+                        <id>generate-verion-class</id>
                         <goals>
-                            <goal>replace</goal>
+                            <goal>filter-sources</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <file>${version.template.file}</file>
-                    <!--<outputFile>${version.file}</outputFile>-->
-                    <replacements>
-                        <replacement>
-                            <token>${project.name}</token>
-                            <value>${project.name}</value>
-                        </replacement>
-                        <replacement>
-                            <token>${project.version}</token>
-                            <value>${project.version}</value>
-                        </replacement>
-                        <replacement>
-                            <token>${buildNumber}</token>
-                            <value>${buildNumber}</value>
-                        </replacement>
-                        <replacement>
-                            <token>${project.url}</token>
-                            <value>${project.url}</value>
-                        </replacement>
-                        <replacement>
-                            <token>${project.organization.name}</token>
-                            <value>${project.organization.name}</value>
-                        </replacement>
-                        <replacement>
-                            <token>${project.organization.url}</token>
-                            <value>${project.organization.url}</value>
-                        </replacement>
-                    </replacements>
-                </configuration>
             </plugin>
+
         </plugins>
     </build>
 </project>

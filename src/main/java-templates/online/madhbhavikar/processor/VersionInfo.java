@@ -1,4 +1,3 @@
-
 /*
  * MIT License
  *
@@ -23,9 +22,6 @@
  * SOFTWARE.
  */
 
-/**
- * THIS IS A DYNAMICALLY GENERATED CLASS, DO NOT EDIT, WOULD BE OVERWRITTEN
- */
 package online.madhbhavikar.processor;
 
 import org.slf4j.Logger;
