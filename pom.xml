@@ -198,7 +198,8 @@
                 <version>1.5.3</version>
                 <executions>
                     <execution>
-                        <phase>generate-sources</phase>
+                        <!--<phase>generate-sources</phase>-->
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>replace</goal>
                         </goals>

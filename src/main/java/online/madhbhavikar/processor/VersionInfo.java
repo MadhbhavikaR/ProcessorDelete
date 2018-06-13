@@ -42,12 +42,12 @@ public final class VersionInfo {
     private VersionInfo() {
     }
 
-    public static final String VERSION = "0.0.1";
-    public static final String BUILD_HASH = "developer_build";
-    public static final String VENDOR = "MadhbhavikaR";
-    public static final String TITLE = "Processor";
-    public static final String ORG_URL = "http://www.madhbhavikar.online";
-    public static final String URL = "http://processor.madhbhavikar.online";
+    public static final String VERSION = "${project.version}";
+    public static final String BUILD_HASH = "${buildNumber}";
+    public static final String VENDOR = "${project.organization.name}";
+    public static final String TITLE = "${project.name}";
+    public static final String ORG_URL = "${project.organization.url}";
+    public static final String URL = "${project.url}";
 
     public static void printVersion() {
         java.net.URL fileUrl = VersionInfo.class.getResource("/logo");
