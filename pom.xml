@@ -2,11 +2,42 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>online.madhbhavikar.projects</groupId>
+    <artifactId>processor</artifactId>
+    <version>0.1.0</version>
+    <name>Processor</name>
+    <description>A Java based, fully configurable, plugin based, pipeline Processor</description>
+    <url>http://processor.madhbhavikar.online</url>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://raw.githubusercontent.com/madhbhavikar/Processor/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>MadhbhavikaR</name>
+        <url>http://www.madhbhavikar.online</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Prasad Madhbhavikar</name>
+            <email>connected.madhbhavikar@gmail.com</email>
+            <organization>${project.organization.name}</organization>
+            <organizationUrl>${project.organization.url}</organizationUrl>
+        </developer>
+    </developers>
+
     <properties>
-        <jackson.version>2.9.5</jackson.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.template.file>src/main/java/com/stackoverflowVersion.java.template</version.template.file>
+        <version.file>src/main/java/online/madhbhavikar/processor/VersionInfo.java</version.file>
+        <jackson.version>2.9.5</jackson.version>
     </properties>
 
     <scm>
@@ -16,27 +47,6 @@
         <tag>${project.version}</tag>
     </scm>
 
-    <groupId>online.madhbhavikar.projects</groupId>
-    <artifactId>processor</artifactId>
-    <version>0.1.0</version>
-    <name>Processor</name>
-    <description>A Java based, fully configurable, plugin based, pipeline Processor</description>
-    <url>http://processor.madhbhavikar.online</url>
-    <licenses>
-        <license>
-            <name>MIT</name>
-            <url>https://raw.githubusercontent.com/madhbhavikar/Processor/blob/master/LICENSE</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>Prasad Madhbhavikar</name>
-            <email>connected.madhbhavikar@gmail.com</email>
-            <organization>MadhbhavikaR</organization>
-            <organizationUrl>http://www.madhbhavikar.online</organizationUrl>
-        </developer>
-    </developers>
 
     <dependencies>
         <dependency>
@@ -67,6 +77,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -181,52 +192,49 @@
                     <shortRevisionLength>8</shortRevisionLength>
                 </configuration>
             </plugin>
-            <!-- TODO: Look for an alternative for this plugin -->
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.7</version>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
                         <phase>generate-sources</phase>
-                        <configuration>
-                            <target>
-                                <property name="src.dir" value=""/>
-                                <property name="package.dir" value="org/toilelibre/libe/curl"/>
-
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="package online.madhbhavikar.processor;${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="public final class Version {${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="    private Version() {}${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="    public static final String VERSION = &quot;${project.version}&quot;;${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="    public static final String BUILD_HASH = &quot;${buildNumber}&quot;;${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="    public static final String VENDOR = &quot;${project.organization}&quot;;${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="    public static final String TITLE = &quot;${project.name}&quot;;${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="    public static final String ORG_URL = &quot;${project.organizationUrl}&quot;;${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="    public static final String URL = &quot;${project.url}&quot;;${line.separator}"/>
-                                <echo file="${project.build.sourceDirectory}/online/madhbhavikar/processor/VersionInfo.java"
-                                      message="}${line.separator}"/>
-                            </target>
-                        </configuration>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+                <configuration>
+                    <file>${version.template.file}</file>
+                    <outputFile>${version.file}</outputFile>
+                    <replacements>
+                        <replacement>
+                            <token>${project.name}</token>
+                            <value>${project.name}</value>
+                        </replacement>
+                        <replacement>
+                            <token>${project.version}</token>
+                            <value>${project.version}</value>
+                        </replacement>
+                        <replacement>
+                            <token>${buildNumber}</token>
+                            <value>${buildNumber}</value>
+                        </replacement>
+                        <replacement>
+                            <token>${project.url}</token>
+                            <value>${project.url}</value>
+                        </replacement>
+                        <replacement>
+                            <token>${project.organization.name}</token>
+                            <value>${project.organization.name}</value>
+                        </replacement>
+                        <replacement>
+                            <token>${project.organization.url}</token>
+                            <value>${project.organization.url}</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+            </plugin>
         </plugins>
-        <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
     </build>
 </project>
