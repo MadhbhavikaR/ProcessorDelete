@@ -24,7 +24,7 @@
 
 package online.madhbhavikar.processor.core;
 
-import online.madhbhavikar.processor.VersionInfo;
+import online.madhbhavikar.processor.core.version.Version;
 import online.madhbhavikar.processor.core.domain.LogicFiles;
 import online.madhbhavikar.processor.core.domain.constants.QueueType;
 import online.madhbhavikar.processor.core.filters.ApplicationFile;
@@ -58,7 +58,7 @@ public class BootStrap {
     }
 
     private void showHeader() {
-        VersionInfo.printVersion();
+        Version.printVersion();
     }
 
     private void loadDirectories(final String[] directoryPaths) {

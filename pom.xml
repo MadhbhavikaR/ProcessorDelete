@@ -156,7 +156,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <doCheck>true</doCheck>
+                    <revisionOnScmFailure>DevelopmentBuild</revisionOnScmFailure>
+                    <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+                    <doCheck>false</doCheck>
                     <doUpdate>true</doUpdate>
                     <shortRevisionLength>8</shortRevisionLength>
                 </configuration>
@@ -167,7 +169,7 @@
                 <version>1.0.0</version>
                 <executions>
                     <execution>
-                        <id>generate-verion-class</id>
+                        <id>generate-version-interface</id>
                         <goals>
                             <goal>filter-sources</goal>
                         </goals>
