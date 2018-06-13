@@ -57,7 +57,7 @@ public class BootStrap {
         this.ioModules = new EnumMap<>(QueueType.class);
     }
 
-    private void showHeader() {
+    private void showBanner() {
         Version.printVersion();
     }
 
@@ -178,7 +178,7 @@ public class BootStrap {
     }
 
     public void run(String[] directories) {
-        showHeader();
+        showBanner();
         LOGGER.info("Boot Strapping Application");
         LOGGER.info("Scanning Directories for Source and Logic files");
         loadDirectories(directories);

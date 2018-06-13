@@ -7,7 +7,7 @@
 
     <groupId>online.madhbhavikar.projects</groupId>
     <artifactId>processor</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.8</version>
     <name>Processor</name>
     <description>A Java based, fully configurable, plugin based, pipeline Processor</description>
     <url>http://processor.madhbhavikar.online</url>

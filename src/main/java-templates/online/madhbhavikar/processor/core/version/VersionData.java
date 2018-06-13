@@ -30,10 +30,10 @@ package online.madhbhavikar.processor.core.version;
 
 // AUTO GENERATED INTERFACE, DO NOT MODIFY THIS INTERFACE, WILL BE OVERRIDDEN! //
 public interface VersionData {
+    String TITLE = "${project.name}";
     String VERSION = "${project.version}";
     String BUILD_HASH = "${buildNumber}";
-    String VENDOR = "${project.organization.name}";
-    String TITLE = "${project.name}";
-    String ORG_URL = "${project.organization.url}";
     String URL = "${project.url}";
+    String VENDOR = "${project.organization.name}";
+    String ORG_URL = "${project.organization.url}";
 }
