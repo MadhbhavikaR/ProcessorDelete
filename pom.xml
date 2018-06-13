@@ -35,7 +35,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.template.file>src/main/java/com/stackoverflowVersion.java.template</version.template.file>
+        <version.template.file>src/templates/VersionInfo.java.template</version.template.file>
         <version.file>src/main/java/online/madhbhavikar/processor/VersionInfo.java</version.file>
         <jackson.version>2.9.5</jackson.version>
     </properties>
